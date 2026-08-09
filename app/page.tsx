@@ -1,69 +1,200 @@
-import Image from "next/image";
+import { Suspense } from "react";
+import AnnouncementBar from "@/components/AnnouncementBar";
+import Header from "@/components/Header";
+import Hero from "@/components/Hero";
+import QuizShell from "@/components/quiz/QuizShell";
+import LeadForm from "@/components/LeadForm";
+import ResultsGallery from "@/components/ResultsGallery";
+import ServiceOverview from "@/components/ServiceOverview";
+import ServicesList from "@/components/ServicesList";
+import WhyChooseUs from "@/components/WhyChooseUs";
+import ClientJourney from "@/components/ClientJourney";
+import SocialProof from "@/components/SocialProof";
+import FAQ from "@/components/FAQ";
+import FinalCTA from "@/components/FinalCTA";
+import Footer from "@/components/Footer";
+import StickyMobileCTA from "@/components/StickyMobileCTA";
+import { siteConfig } from "@/lib/site-config";
+
+const localBusinessJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: siteConfig.businessName,
+  image: `${siteConfig.canonicalUrl}images/studio.jpg`,
+  url: siteConfig.canonicalUrl,
+  telephone: siteConfig.phoneHref.replace("tel:", ""),
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Austin",
+    addressRegion: "TX",
+    addressCountry: "US",
+  },
+  areaServed: ["Austin, TX", "Pflugerville, TX"],
+  sameAs: [siteConfig.instagramUrl, siteConfig.website],
+};
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Liquid BBL Consultation",
+  serviceType: "Liquid BBL Consultation",
+  provider: {
+    "@type": "LocalBusiness",
+    name: siteConfig.businessName,
+  },
+  areaServed: ["Austin, TX", "Pflugerville, TX"],
+  url: siteConfig.canonicalUrl,
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Is a consultation required?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. A consultation helps the provider learn about your goals, discuss eligibility, review possible risks and alternatives, and explain what to expect.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How soon can I book?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Availability varies. Submit the consultation form or review current openings through the Square booking page.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How much does the service cost?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Pricing depends on the treatment plan and the amount of product or number of sessions recommended. The team can discuss current pricing after learning more about your goals.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How long do results last?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Duration varies by treatment method, product, individual response, lifestyle, and follow-up care. The provider can explain realistic expectations during your consultation.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Is there downtime?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Recovery experiences vary. Your provider should explain possible swelling, tenderness, activity restrictions, aftercare, warning signs, and follow-up requirements before treatment.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Am I guaranteed a specific result?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No. Results vary, and no specific outcome can be guaranteed.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can I book directly?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. You may request a consultation through this page or view current availability through the Square booking link.",
+      },
+    },
+  ],
+};
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <>
+      {/* Do not include unverified star ratings or review counts in this JSON-LD. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+
+      <AnnouncementBar />
+      <Header />
+
+      <main id="main-content">
+        <Hero />
+
+        {/* ── Glow Quiz ───────────────────────────────────────── */}
+        <section
+          id="glow-quiz"
+          className="border-b border-rose/15"
+          style={{
+            background: "linear-gradient(180deg, #fef4f0 0%, #fff5f2 100%)",
+          }}
+        >
+          <div className="mx-auto max-w-3xl px-4 pb-8 pt-14 text-center sm:px-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rose">
+              Free &middot; 60 Seconds
+            </p>
+            <h2 className="mt-3 font-serif text-3xl text-ink sm:text-4xl">
+              The Dollhouse Glow Quiz
+            </h2>
+            <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-muted">
+              Answer a few questions and we&apos;ll match you with the treatment most aligned with
+              your beauty goals.
+            </p>
+          </div>
+          <Suspense fallback={<QuizFallback />}>
+            <QuizShell />
+          </Suspense>
+        </section>
+
+        <section id="lead-form" className="bg-cream">
+          <div className="mx-auto max-w-3xl px-4 py-20 sm:px-6 lg:px-8">
+            <Suspense fallback={<LeadFormFallback />}>
+              <LeadForm />
+            </Suspense>
+          </div>
+        </section>
+
+        <ResultsGallery />
+        <ServiceOverview />
+        <ServicesList />
+        <WhyChooseUs />
+        <ClientJourney />
+        <SocialProof />
+        <FAQ />
+        <FinalCTA />
       </main>
+
+      <Footer />
+      <StickyMobileCTA />
+    </>
+  );
+}
+
+function LeadFormFallback() {
+  return (
+    <div className="gold-border h-[420px] animate-pulse rounded-md bg-cream-surface" aria-hidden="true" />
+  );
+}
+
+function QuizFallback() {
+  return (
+    <div className="flex min-h-[40vh] items-center justify-center">
+      <div
+        className="h-8 w-8 animate-spin rounded-full"
+        style={{ border: "2px solid rgba(193,126,108,0.2)", borderTopColor: "var(--color-rose)" }}
+        aria-label="Loading quiz"
+      />
     </div>
   );
 }

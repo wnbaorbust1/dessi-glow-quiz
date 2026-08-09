@@ -1,26 +1,123 @@
 @import "tailwindcss";
 
+/* -----------------------------------------------------------------------
+   Dessi Dollhouse Aesthetics — design tokens
+   Rebranded to match the studio's real Instagram carousel palette: black
+   and blush-cream sections alternate down the page; dusty rose is the
+   primary/interactive accent (buttons, icons, links), warm gold is the
+   secondary/decorative accent (logo, borders, frame lines, labels). Red is
+   reserved for form validation errors only — it is not a brand accent.
+------------------------------------------------------------------------ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-bg: #fff5f2;
+  --color-surface: #fde8e0;
+  --color-cream: #f9ddd6;
+  --color-cream-surface: #fef4f0;
+  --color-ink: #2a1a16;
+  --color-gold: #b8903a;
+  --color-gold-soft: #c9a350;
+  --color-rose: #c17e6c;
+  --color-rose-soft: #d4897a;
+  --color-error: #b3453d;
+  --color-white: #ffffff;
+  --color-muted: #6b5d56;
+  --color-muted-warm: #8a6a60;
+
+  --font-serif: var(--font-playfair), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--color-bg);
+  --color-surface: var(--color-surface);
+  --color-cream: var(--color-cream);
+  --color-cream-surface: var(--color-cream-surface);
+  --color-ink: var(--color-ink);
+  --color-gold: var(--color-gold);
+  --color-gold-soft: var(--color-gold-soft);
+  --color-rose: var(--color-rose);
+  --color-rose-soft: var(--color-rose-soft);
+  --color-error: var(--color-error);
+  --color-white: var(--color-white);
+  --color-muted: var(--color-muted);
+  --color-muted-warm: var(--color-muted-warm);
+
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+* {
+  border-color: rgba(198, 160, 107, 0.2);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* Visible, on-brand focus states for keyboard users. Rose signals
+   "interactive" throughout this palette, so focus rings use it too. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--color-rose);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Reusable gold hairline border effect — the tan tone has enough midtone
+   contrast to read on both black and blush-cream section backgrounds. */
+.gold-border {
+  border: 1px solid rgba(198, 160, 107, 0.4);
+}
+
+.gold-gradient-text {
+  background: linear-gradient(120deg, var(--color-rose) 0%, var(--color-gold-soft) 55%, var(--color-gold) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.section-divider {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(198, 160, 107, 0.5) 50%, transparent 100%);
+}
+
+/* Subtle fade-in-up reveal, respects reduced motion via the block above */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-reveal {
+  animation: fade-in-up 0.6s ease-out both;
 }
