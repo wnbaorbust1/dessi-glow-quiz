@@ -1,6 +1,8 @@
 import { getSupabaseServer } from "@/lib/supabase/server";
 import LeadsTable from "./LeadsTable";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminLeadsPage({
   searchParams,
 }: {

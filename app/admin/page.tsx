@@ -1,5 +1,7 @@
 import { getSupabaseServer } from "@/lib/supabase/server";
 
+export const dynamic = "force-dynamic";
+
 interface Stat {
   label: string;
   value: string | number;
