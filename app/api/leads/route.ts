@@ -112,38 +112,31 @@ export async function POST(request: Request) {
     console.error("[google-sheets] Failed to append lead:", err);
   }
 
-  // Both integrations above are wrapped in try/catch so an outage on
-  // either one never blocks the visitor's success response — the lead is
-  // still captured in the server log above either way.
-
-  // ---------------------------------------------------------------------
-  // TODO: Connect any additional destinations for the validated `lead`
-  // object above. Keep all secrets in server-only environment variables
-  // (see .env.example) — never in NEXT_PUBLIC_* variables, which are
-  // bundled into client-side JS.
-  //
-  // 1) ZAPIER WEBHOOK (not currently used — see lib/zapier.ts if you want
-  //    to revisit it; requires a paid Zapier plan for the Webhooks trigger)
-  //    await sendLeadToZapier(lead);
-  //
-  // 2) CRM (e.g. HubSpot, GoHighLevel, custom)
-  //    await fetch(`${process.env.CRM_API_URL}/contacts`, {
-  //      method: "POST",
-  //      headers: {
-  //        "Content-Type": "application/json",
-  //        Authorization: `Bearer ${process.env.CRM_API_KEY}`,
-  //      },
-  //      body: JSON.stringify(lead),
-  //    });
-  //
-  // 3) EMAIL SERVICE (e.g. Resend, SendGrid, Postmark)
-  //    await resend.emails.send({
-  //      from: "leads@dessidollhouse.com",
-  //      to: "team@dessidollhouse.com",
-  //      subject: `New consultation request: ${lead.firstName} ${lead.lastName}`,
-  //      text: JSON.stringify(lead, null, 2),
-  //    });
-  // ---------------------------------------------------------------------
+  // GoHighLevel webhook
+  if (process.env.GHL_WEBHOOK_URL) {
+    try {
+      await fetch(process.env.GHL_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          first_name: lead.firstName,
+          last_name: lead.lastName,
+          email: lead.email,
+          phone: lead.phone,
+          service_interest: lead.serviceInterest,
+          timeframe: lead.timeframe,
+          main_goal: lead.mainGoal,
+          source: lead.source || "website",
+          utm_source: lead.utmSource,
+          utm_medium: lead.utmMedium,
+          utm_campaign: lead.utmCampaign,
+          tags: ["consultation-form", "dessi-dollhouse"],
+        }),
+      });
+    } catch (err) {
+      console.error("[ghl] Webhook error:", err);
+    }
+  }
 
   return NextResponse.json({ ok: true });
 }

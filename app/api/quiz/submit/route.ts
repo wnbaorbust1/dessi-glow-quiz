@@ -206,6 +206,28 @@ export async function POST(request: Request) {
     refCode: data.refCode,
   }).catch((e) => console.error("[email]", e));
 
+  // GoHighLevel webhook
+  if (process.env.GHL_WEBHOOK_URL) {
+    fetch(process.env.GHL_WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        first_name: data.firstName,
+        email: data.email,
+        phone: data.phone,
+        quiz_result: scoring.result.dollName,
+        service_interest: scoring.result.serviceMatch,
+        lead_temp: leadTemp,
+        utm_source: data.utmSource,
+        utm_medium: data.utmMedium,
+        utm_campaign: data.utmCampaign,
+        ref_code: data.refCode,
+        source: leadSource,
+        tags: ["glow-quiz", "dessi-dollhouse", scoring.result.key],
+      }),
+    }).catch((e) => console.error("[ghl] Quiz webhook error:", e));
+  }
+
   console.log("[quiz/submit] New quiz lead:", {
     name: data.firstName,
     email: data.email,
