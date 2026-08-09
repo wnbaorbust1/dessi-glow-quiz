@@ -65,6 +65,17 @@ export function scoreQuiz(answers: QuizAnswers): ScoringOutput {
     }
   }
 
+  // If the user selected many answers across many different result categories,
+  // they have broad/unclear goals — boost "custom" so it wins.
+  const totalAnswersSelected = Object.values(answers)
+    .flat()
+    .filter((id) => !id.startsWith("q5_")) // exclude lead temp question
+    .length;
+  const resultKeysScored = ALL_RESULT_KEYS.filter((k) => scores[k] > 0).length;
+  if (totalAnswersSelected >= 8 || resultKeysScored >= 7) {
+    scores["custom"] = Math.max(...Object.values(scores)) + 2;
+  }
+
   const winningKey = selectWinner(scores, answers);
 
   return {
