@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { leadFormSchema } from "@/lib/validation";
 import { appendLeadToGoogleSheet } from "@/lib/google-sheets";
 import { sendLeadToAppsScriptSheet } from "@/lib/apps-script-sheets";
+import { getSupabaseServer } from "@/lib/supabase/server";
 
 /**
  * POST /api/leads
@@ -67,6 +68,30 @@ export async function POST(request: Request) {
       content: lead.utmContent,
     },
   });
+
+  // Save to Supabase
+  const supabase = getSupabaseServer();
+  if (supabase) {
+    try {
+      await supabase.from("leads").insert({
+        first_name: lead.firstName,
+        email: lead.email,
+        phone: lead.phone || null,
+        service_interest: lead.serviceInterest || null,
+        lead_source: lead.source || "direct",
+        utm_source: lead.utmSource || null,
+        utm_medium: lead.utmMedium || null,
+        utm_campaign: lead.utmCampaign || null,
+        utm_content: lead.utmContent || null,
+        lead_temp: lead.timeframe === "As soon as possible" ? "hot" : lead.timeframe === "Within 2 weeks" || lead.timeframe === "Within 30 days" ? "warm" : "nurture",
+        marketing_consent: true,
+        status: "new",
+        quiz_answers: { _form_submission: true, mainGoal: lead.mainGoal },
+      });
+    } catch (err) {
+      console.error("[leads] Supabase insert error:", err);
+    }
+  }
 
   // Google Sheets via Apps Script web app — the active integration. No-ops
   // with a console warning until GOOGLE_APPS_SCRIPT_URL is set — see
