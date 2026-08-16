@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Menu, X } from "lucide-react";
 
 const NAV_LINKS = [
@@ -47,17 +46,11 @@ export default function Header() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         <Link href="#top" className="flex items-center gap-3" aria-label="Dessi Dollhouse Aesthetics home">
           {/*
-            LOGO: replace /public/images/logo.png with the approved brand
-            logo file (transparent PNG recommended, ~240x240 or larger).
+            LOGO: no approved logo file has been supplied yet, so this is a
+            text wordmark for now. Once you have the real logo, add it to
+            /public/images/logo.png and swap this <span> for a
+            next/image <Image> (see git history for the previous markup).
           */}
-          <Image
-            src="/images/logo.png"
-            alt="Dessi Dollhouse Aesthetics logo"
-            width={44}
-            height={44}
-            className="rounded-full border border-gold/40"
-            priority
-          />
           <span className="font-serif text-lg tracking-wide text-ink sm:text-xl">
             Dessi Dollhouse <span className="text-gold">Aesthetics</span>
           </span>

@@ -1,5 +1,4 @@
-import Image from "next/image";
-import { CalendarCheck2, MapPin, Sparkles } from "lucide-react";
+import { CalendarCheck2, Camera, MapPin, Sparkles } from "lucide-react";
 
 const TRUST_POINTS = [
   { icon: Sparkles, label: "Personalized consultations" },
@@ -64,21 +63,18 @@ export default function Hero() {
         </div>
 
         <div className="relative animate-reveal">
+          {/*
+            HERO IMAGE: no approved studio/result photo has been supplied
+            yet, so this shows a placeholder instead of a fake photo. Once
+            you have one, add it to /public/images/hero-result.jpg and
+            replace this div with a next/image <Image fill .../> (see git
+            history for the previous markup).
+          */}
           <div
-            className="relative aspect-[4/5] w-full overflow-hidden rounded-md border border-rose/20 bg-cream shadow-[0_0_60px_rgba(193,126,108,0.12)]"
+            className="relative flex aspect-[4/5] w-full flex-col items-center justify-center gap-3 overflow-hidden rounded-md border border-dashed border-rose/30 bg-cream text-center shadow-[0_0_60px_rgba(193,126,108,0.12)]"
           >
-            <Image
-              src="/images/hero-result.jpg"
-              alt="Studio result photo from Dessi Dollhouse Aesthetics, shown with client permission"
-              fill
-              priority
-              sizes="(min-width: 1024px) 40vw, 90vw"
-              className="object-cover"
-            />
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 bg-gradient-to-t from-rose/20 via-transparent to-transparent"
-            />
+            <Camera size={32} className="text-rose/50" aria-hidden="true" />
+            <p className="max-w-[70%] text-sm text-muted">Studio photo coming soon</p>
           </div>
         </div>
       </div>

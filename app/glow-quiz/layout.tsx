@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { siteConfig } from "@/lib/site-config";
 
+// No approved, high-resolution photo has been supplied yet for the Open
+// Graph card (ideally 1200x630) — add one to /public/images/ and set
+// openGraph.images once available; omitting it for now avoids link
+// previews showing a 404.
 export const metadata: Metadata = {
   title: "Which Dollhouse Treatment Is Right for You? | Dessi Dollhouse",
   description:
@@ -14,7 +17,6 @@ export const metadata: Metadata = {
     siteName: siteConfig.businessName,
     locale: "en_US",
     type: "website",
-    images: [{ url: "/images/hero-result.jpg", width: 1200, height: 630 }],
   },
 };
 
@@ -28,14 +30,7 @@ export default function QuizLayout({ children }: { children: React.ReactNode }) 
       >
         <div className="mx-auto flex max-w-2xl items-center justify-between px-4 py-3">
           <Link href="/" className="flex items-center gap-2.5">
-            <Image
-              src="/images/logo.png"
-              alt="Dessi Dollhouse"
-              width={32}
-              height={32}
-              className="rounded-full"
-              style={{ border: "1px solid rgba(198,160,107,0.4)" }}
-            />
+            {/* LOGO: no approved logo file yet — text wordmark for now. */}
             <span
               className="font-serif text-sm"
               style={{ color: "var(--color-cream)" }}

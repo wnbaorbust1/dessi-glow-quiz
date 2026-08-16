@@ -20,7 +20,10 @@ const localBusinessJsonLd = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   name: siteConfig.businessName,
-  image: `${siteConfig.canonicalUrl}images/studio.jpg`,
+  // No approved studio photo supplied yet — add one to /public/images/
+  // and restore an "image" field here once available (Google recommends
+  // including one for LocalBusiness rich results, but a 404'ing URL is
+  // worse than omitting the field).
   url: siteConfig.canonicalUrl,
   telephone: siteConfig.phoneHref.replace("tel:", ""),
   address: {

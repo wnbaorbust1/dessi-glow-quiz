@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Globe, MapPin, Phone } from "lucide-react";
 import InstagramGlyph from "@/components/icons/InstagramGlyph";
@@ -13,14 +12,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <div className="flex items-center gap-3">
-              {/* LOGO: same file as the header — see components/Header.tsx comment. */}
-              <Image
-                src="/images/logo.png"
-                alt="Dessi Dollhouse Aesthetics logo"
-                width={40}
-                height={40}
-                className="rounded-full border border-gold/40"
-              />
+              {/* LOGO: no approved logo file yet — see components/Header.tsx comment. */}
               <span className="font-serif text-base text-ink">Dessi Dollhouse Aesthetics</span>
             </div>
             <p className="mt-4 flex items-start gap-2 text-sm text-muted">

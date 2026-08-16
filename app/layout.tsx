@@ -31,6 +31,10 @@ export const metadata: Metadata = {
     // before launch (see README "Set the canonical domain").
     canonical: siteConfig.canonicalUrl,
   },
+  // No approved, high-resolution studio/brand photo has been supplied yet
+  // for Open Graph / Twitter cards (ideally 1200x630). Once you have one,
+  // add it to /public/images/ and set openGraph.images / twitter.images
+  // here — omitting them for now avoids link previews showing a 404.
   openGraph: {
     title: pageTitle,
     description: pageDescription,
@@ -38,22 +42,11 @@ export const metadata: Metadata = {
     siteName: siteConfig.businessName,
     locale: "en_US",
     type: "website",
-    images: [
-      {
-        // Replace with an approved, high-resolution studio or brand image
-        // sized 1200x630 for optimal Open Graph rendering.
-        url: "/images/hero-result.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Dessi Dollhouse Aesthetics",
-      },
-    ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: pageTitle,
     description: pageDescription,
-    images: ["/images/hero-result.jpg"],
   },
   robots: {
     index: true,
