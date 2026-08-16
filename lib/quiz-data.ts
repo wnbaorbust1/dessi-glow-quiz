@@ -226,7 +226,7 @@ export const QUIZ_RESULTS: Record<ResultKey, QuizResult> = {
     whyYouMatched:
       "Based on your beauty goals, a subtle enhancement sounds like the right direction for you. A lip flip is low-commitment, natural-looking, and a great way to explore aesthetic treatments.",
     nextStep:
-      "Book a personalized consultation with Desi Dollhouse to discuss your goals and find out if a lip flip may be the right fit for you.",
+      "Book a personalized consultation with Dessi Dollhouse to discuss your goals and find out if a lip flip may be the right fit for you.",
   },
   pout: {
     key: "pout",
@@ -245,7 +245,7 @@ export const QUIZ_RESULTS: Record<ResultKey, QuizResult> = {
     whyYouMatched:
       "Your answers point toward a desire for fuller, more defined lips and visible results. Lip filler may be a strong option to explore during your consultation.",
     nextStep:
-      "Book a personalized consultation with Desi Dollhouse to discuss what lip filler may look like for your unique features and goals.",
+      "Book a personalized consultation with Dessi Dollhouse to discuss what lip filler may look like for your unique features and goals.",
   },
   refresh: {
     key: "refresh",
@@ -264,7 +264,7 @@ export const QUIZ_RESULTS: Record<ResultKey, QuizResult> = {
     whyYouMatched:
       "Your answers suggest you're interested in a refreshed, natural look — and Botox is often the go-to for exactly that. A consultation is the best place to explore whether it aligns with your goals.",
     nextStep:
-      "Book a personalized Botox consultation with Desi Dollhouse to learn what a refreshed version of you might look like.",
+      "Book a personalized Botox consultation with Dessi Dollhouse to learn what a refreshed version of you might look like.",
   },
   smooth: {
     key: "smooth",
@@ -283,7 +283,7 @@ export const QUIZ_RESULTS: Record<ResultKey, QuizResult> = {
     whyYouMatched:
       "Based on your focus on facial smoothness and natural results, smile line correction may be worth discussing. Your provider can walk you through what options may be appropriate for your goals.",
     nextStep:
-      "Book a consultation with Desi Dollhouse to explore what smile line correction might look like for your face and goals.",
+      "Book a consultation with Dessi Dollhouse to explore what smile line correction might look like for your face and goals.",
   },
   reset: {
     key: "reset",
@@ -302,7 +302,7 @@ export const QUIZ_RESULTS: Record<ResultKey, QuizResult> = {
     whyYouMatched:
       "Your answers indicate you may want to address previous filler. A filler dissolver consultation is the right first step — your provider can assess your situation and discuss what a reset could look like for you.",
     nextStep:
-      "Book a filler dissolver consultation with Desi Dollhouse to discuss your options and what a fresh start may involve.",
+      "Book a filler dissolver consultation with Dessi Dollhouse to discuss your options and what a fresh start may involve.",
   },
   sculpt: {
     key: "sculpt",
@@ -321,7 +321,7 @@ export const QUIZ_RESULTS: Record<ResultKey, QuizResult> = {
     whyYouMatched:
       "Your answers point toward a desire to define and sculpt your shape. Fat dissolving may be a treatment to discuss during your consultation, depending on your goals and anatomy.",
     nextStep:
-      "Book a fat dissolving consultation with Desi Dollhouse to explore how sculpting treatments may help you reach your shape goals.",
+      "Book a fat dissolving consultation with Dessi Dollhouse to explore how sculpting treatments may help you reach your shape goals.",
   },
   curves: {
     key: "curves",
@@ -330,7 +330,7 @@ export const QUIZ_RESULTS: Record<ResultKey, QuizResult> = {
     emoji: "🍑",
     tagline: "Your curves. Amplified.",
     description:
-      "A Liquid BBL (Brazilian Butt Lift) uses strategically placed filler injections to enhance the appearance of the hips, waist, and buttocks — creating the illusion of fuller, rounder, more sculpted curves without surgery. It's one of the most requested body treatments at Desi Dollhouse, delivering dramatic yet natural-looking results in a single session.",
+      "A Liquid BBL (Brazilian Butt Lift) uses strategically placed filler injections to enhance the appearance of the hips, waist, and buttocks — creating the illusion of fuller, rounder, more sculpted curves without surgery. It's one of the most requested body treatments at Dessi Dollhouse, delivering dramatic yet natural-looking results in a single session.",
     benefits: [
       "Non-surgical — no incisions, no general anesthesia, no lengthy recovery",
       "Enhances hip dip area, creates a more defined waist-to-hip ratio",
@@ -340,7 +340,7 @@ export const QUIZ_RESULTS: Record<ResultKey, QuizResult> = {
     whyYouMatched:
       "Your answers strongly suggest you're interested in enhancing your body's curves and silhouette. A Liquid BBL consultation is the perfect place to explore what may be possible for your unique shape.",
     nextStep:
-      "Book a Liquid BBL consultation with Desi Dollhouse to discuss your body goals and find out what a customized approach may look like for you.",
+      "Book a Liquid BBL consultation with Dessi Dollhouse to discuss your body goals and find out what a customized approach may look like for you.",
   },
   sparkle: {
     key: "sparkle",
@@ -359,7 +359,7 @@ export const QUIZ_RESULTS: Record<ResultKey, QuizResult> = {
     whyYouMatched:
       "Your answers show a love for unique, expressive beauty and a focus on your smile. Teeth gems are a fun, low-commitment way to add a little sparkle to your everyday look.",
     nextStep:
-      "Book a teeth gems appointment with Desi Dollhouse and get ready to shine.",
+      "Book a teeth gems appointment with Dessi Dollhouse and get ready to shine.",
   },
   custom: {
     key: "custom",
@@ -368,7 +368,7 @@ export const QUIZ_RESULTS: Record<ResultKey, QuizResult> = {
     emoji: "👑",
     tagline: "You defy the box. Let's build your plan.",
     description:
-      "Your beauty goals are unique — and a one-size-fits-all answer isn't going to cut it. A personal consultation with Desi Dollhouse is your opportunity to have a real, honest conversation about everything you want to achieve. No pressure, no sales pitch. Just an expert ear, personalized insight, and a clear plan built around you.",
+      "Your beauty goals are unique — and a one-size-fits-all answer isn't going to cut it. A personal consultation with Dessi Dollhouse is your opportunity to have a real, honest conversation about everything you want to achieve. No pressure, no sales pitch. Just an expert ear, personalized insight, and a clear plan built around you.",
     benefits: [
       "Explore multiple treatments in one session — lips, body, skin, and more",
       "Get honest guidance on what's realistic, what's not, and what order makes sense",
@@ -378,7 +378,7 @@ export const QUIZ_RESULTS: Record<ResultKey, QuizResult> = {
     whyYouMatched:
       "Your answers suggest you're still exploring, have multiple goals, or want a fully personalized approach. That's exactly what a custom consultation is for — no pressure, just real conversation about what may work for you.",
     nextStep:
-      "Book a personal consultation with Desi Dollhouse to build a plan that's truly designed around you.",
+      "Book a personal consultation with Dessi Dollhouse to build a plan that's truly designed around you.",
   },
 };
 

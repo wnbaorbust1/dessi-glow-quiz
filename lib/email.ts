@@ -51,7 +51,7 @@ export async function sendQuizResultEmail(data: QuizLeadEmailData): Promise<void
           <tr>
             <td style="padding:36px 40px 0;text-align:center;">
               <p style="margin:0;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#c6a06b;">
-                Desi Dollhouse · Pflugerville, Texas
+                Dessi Dollhouse · Pflugerville, Texas
               </p>
               <h1 style="margin:16px 0 0;font-size:28px;font-weight:700;color:#f3e3d5;line-height:1.2;">
                 Your Dollhouse Match Is Here 💕
@@ -108,7 +108,7 @@ export async function sendQuizResultEmail(data: QuizLeadEmailData): Promise<void
                 <strong style="color:#c9c9c9;">Disclaimer:</strong> This quiz result is for
                 educational and promotional purposes only. It does not constitute medical advice,
                 a diagnosis, or a determination of treatment eligibility. Results vary. A consultation
-                with a qualified provider is required before any treatment decision. Desi Dollhouse
+                with a qualified provider is required before any treatment decision. Dessi Dollhouse
                 is located in Pflugerville, Texas.
               </p>
             </td>
@@ -118,7 +118,7 @@ export async function sendQuizResultEmail(data: QuizLeadEmailData): Promise<void
           <tr>
             <td style="padding:24px 40px;text-align:center;">
               <p style="margin:0;font-size:11px;color:#8a7a6e;">
-                © ${new Date().getFullYear()} Desi Dollhouse · Pflugerville, TX<br/>
+                © ${new Date().getFullYear()} Dessi Dollhouse · Pflugerville, TX<br/>
                 You received this email because you completed the Dollhouse Glow Quiz.
               </p>
             </td>
@@ -142,7 +142,7 @@ export async function sendQuizResultEmail(data: QuizLeadEmailData): Promise<void
   }
 }
 
-/** Notify the Desi Dollhouse team of a new quiz lead */
+/** Notify the Dessi Dollhouse team of a new quiz lead */
 export async function sendTeamNotification(data: {
   firstName: string;
   email: string;

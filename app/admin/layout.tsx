@@ -9,7 +9,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
           <div className="flex items-center gap-6">
             <span className="font-serif text-sm" style={{ color: "#c6a06b" }}>
-              Desi Dollhouse Admin
+              Dessi Dollhouse Admin
             </span>
             <nav className="hidden items-center gap-4 sm:flex">
               {[

@@ -30,7 +30,7 @@ export default function QuizIntro({ onStart, refCode }: Props) {
       <p
         className="mx-auto mt-5 max-w-lg text-base leading-relaxed text-muted sm:text-lg"
       >
-        Take our free 60-second Glow Quiz and discover which Desi Dollhouse
+        Take our free 60-second Glow Quiz and discover which Dessi Dollhouse
         treatment may best match your beauty goals.
       </p>
 
@@ -67,7 +67,7 @@ export default function QuizIntro({ onStart, refCode }: Props) {
             color: "var(--color-rose-soft)",
           }}
         >
-          You were referred by a Desi Dollhouse ambassador ✨
+          You were referred by a Dessi Dollhouse ambassador ✨
         </div>
       )}
 

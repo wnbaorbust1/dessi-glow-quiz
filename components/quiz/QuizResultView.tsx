@@ -21,13 +21,13 @@ export default function QuizResultView({ result, matchedAnswers, onBookingClick 
   const quizUrl =
     typeof window !== "undefined" ? `${window.location.origin}/glow-quiz` : "/glow-quiz";
 
-  const shareText = `I got ${result.dollName} ${result.emoji} on the Desi Dollhouse Glow Quiz!\n\nMy match: ${result.serviceMatch}\n\nTake it here: ${quizUrl}`;
+  const shareText = `I got ${result.dollName} ${result.emoji} on the Dessi Dollhouse Glow Quiz!\n\nMy match: ${result.serviceMatch}\n\nTake it here: ${quizUrl}`;
 
   async function handleShare() {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: `I'm ${result.dollName}! | Desi Dollhouse Glow Quiz`,
+          title: `I'm ${result.dollName}! | Dessi Dollhouse Glow Quiz`,
           text: shareText,
           url: quizUrl,
         });
@@ -231,7 +231,7 @@ export default function QuizResultView({ result, matchedAnswers, onBookingClick 
             border: "1px solid rgba(193,126,108,0.2)",
           }}
         >
-          <p className="text-xs font-medium text-muted">Desi Dollhouse · Pflugerville, TX</p>
+          <p className="text-xs font-medium text-muted">Dessi Dollhouse · Pflugerville, TX</p>
           <p className="mt-2 text-4xl">{result.emoji}</p>
           <p className="mt-1 font-serif text-lg font-semibold text-ink">
             I&apos;m {result.dollName}

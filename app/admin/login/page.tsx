@@ -53,7 +53,7 @@ function LoginForm() {
         <div className="mb-6 text-center">
           <Lock size={24} style={{ color: "#c6a06b", margin: "0 auto 12px" }} />
           <h1 className="font-serif text-2xl" style={{ color: "#f3e3d5" }}>Admin Login</h1>
-          <p className="mt-1 text-xs" style={{ color: "#8a7a6e" }}>Desi Dollhouse Dashboard</p>
+          <p className="mt-1 text-xs" style={{ color: "#8a7a6e" }}>Dessi Dollhouse Dashboard</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">

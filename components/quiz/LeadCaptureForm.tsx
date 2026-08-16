@@ -208,7 +208,7 @@ export default function LeadCaptureForm({ onSubmit, onBack, isSubmitting }: Prop
           />
           <span className="text-xs leading-relaxed" style={{ color: "var(--color-muted-warm)" }}>
             I&apos;d like to receive my personalized Dollhouse match and occasional beauty tips from
-            Desi Dollhouse by email. I can unsubscribe at any time. Consent is not required to
+            Dessi Dollhouse by email. I can unsubscribe at any time. Consent is not required to
             receive your quiz result.
           </span>
         </label>

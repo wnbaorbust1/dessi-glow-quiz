@@ -58,7 +58,7 @@ export default function QRGenerator({ baseUrl }: Props) {
     if (!canvas) return;
     const a = document.createElement("a");
     a.href = canvas.toDataURL("image/png");
-    a.download = `desi-dollhouse-glow-quiz-qr-${PRESETS[preset]?.label.toLowerCase().replace(/\s+/g, "-") ?? "custom"}.png`;
+    a.download = `dessi-dollhouse-glow-quiz-qr-${PRESETS[preset]?.label.toLowerCase().replace(/\s+/g, "-") ?? "custom"}.png`;
     a.click();
   }
 
@@ -149,7 +149,7 @@ export default function QRGenerator({ baseUrl }: Props) {
             display: generating || error ? "none" : "block",
           }}
         >
-          <canvas ref={canvasRef} aria-label="QR Code for Desi Dollhouse Glow Quiz" />
+          <canvas ref={canvasRef} aria-label="QR Code for Dessi Dollhouse Glow Quiz" />
         </div>
 
         {generating && (
@@ -169,7 +169,7 @@ export default function QRGenerator({ baseUrl }: Props) {
         {hasQR && (
           <>
             <p className="text-center text-xs" style={{ color: "#8a7a6e" }}>
-              {PRESETS[preset]?.label ?? "Custom"} · Desi Dollhouse Glow Quiz
+              {PRESETS[preset]?.label ?? "Custom"} · Dessi Dollhouse Glow Quiz
             </p>
             <button
               onClick={downloadPNG}

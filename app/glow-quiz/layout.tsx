@@ -4,13 +4,13 @@ import Image from "next/image";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
-  title: "Which Dollhouse Treatment Is Right for You? | Desi Dollhouse",
+  title: "Which Dollhouse Treatment Is Right for You? | Dessi Dollhouse",
   description:
-    "Take the free 60-second Desi Dollhouse Glow Quiz and discover which beauty treatment may align with your glow goals.",
+    "Take the free 60-second Dessi Dollhouse Glow Quiz and discover which beauty treatment may align with your glow goals.",
   openGraph: {
-    title: "Which Dollhouse Treatment Is Right for You? | Desi Dollhouse",
+    title: "Which Dollhouse Treatment Is Right for You? | Dessi Dollhouse",
     description:
-      "Take the free 60-second Desi Dollhouse Glow Quiz and discover which beauty treatment may align with your glow goals.",
+      "Take the free 60-second Dessi Dollhouse Glow Quiz and discover which beauty treatment may align with your glow goals.",
     siteName: siteConfig.businessName,
     locale: "en_US",
     type: "website",
@@ -30,7 +30,7 @@ export default function QuizLayout({ children }: { children: React.ReactNode }) 
           <Link href="/" className="flex items-center gap-2.5">
             <Image
               src="/images/logo.png"
-              alt="Desi Dollhouse"
+              alt="Dessi Dollhouse"
               width={32}
               height={32}
               className="rounded-full"
@@ -40,7 +40,7 @@ export default function QuizLayout({ children }: { children: React.ReactNode }) 
               className="font-serif text-sm"
               style={{ color: "var(--color-cream)" }}
             >
-              Desi Dollhouse
+              Dessi Dollhouse
             </span>
           </Link>
           <span

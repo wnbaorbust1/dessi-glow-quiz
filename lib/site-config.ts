@@ -7,7 +7,7 @@
  * imports from here, so a single edit updates the whole site.
  */
 export const siteConfig = {
-  businessName: "Desi Dollhouse",
+  businessName: "Dessi Dollhouse",
   tagline: "Pflugerville Beauty Studio",
   location: "Pflugerville, Texas",
   phone: "(314) 307-9379",
