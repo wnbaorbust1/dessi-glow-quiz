@@ -7,7 +7,7 @@
  *
  * All secrets are server-only environment variables.
  */
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { z } from "zod";
 import { scoreQuiz } from "@/lib/quiz-scoring";
 import { validateQuizQ5Answer } from "@/lib/lead-temperature";
@@ -218,24 +218,40 @@ export async function POST(request: Request) {
     console.error("[quiz/submit] Google Sheets error:", err);
   }
 
-  // Send emails (non-blocking)
+  // Send emails + GHL webhook — scheduled via after() rather than plain
+  // fire-and-forget. On Vercel's serverless runtime, a Route Handler's
+  // execution can be frozen the moment the response is sent; an unawaited
+  // promise (like a bare `fetch(...).catch(...)`) can be killed mid-flight
+  // before it ever reaches GHL or Resend. after() uses Vercel's waitUntil
+  // to keep the function alive until this work actually finishes, while
+  // still letting the response return to the browser immediately — see
+  // https://nextjs.org/docs/app/api-reference/functions/after.
+  //
+  // (This was the actual cause of "email and contact not created": the
+  // webhook payload/URL were correct — direct calls to them worked — but
+  // real browser submissions never got far enough for the fire-and-forget
+  // calls to complete before the function froze.)
   if (data.marketingConsent) {
-    sendQuizResultEmail({
-      firstName: data.firstName,
-      email: data.email,
-      result: scoring.result,
-      leadTemp: scoring.leadTemp,
-    }).catch((e) => console.error("[email]", e));
+    after(() =>
+      sendQuizResultEmail({
+        firstName: data.firstName,
+        email: data.email,
+        result: scoring.result,
+        leadTemp: scoring.leadTemp,
+      }).catch((e) => console.error("[email]", e))
+    );
   }
 
-  sendTeamNotification({
-    firstName: data.firstName,
-    email: data.email,
-    phone: data.phone,
-    result: scoring.result,
-    leadTemp: scoring.leadTemp,
-    refCode: data.refCode,
-  }).catch((e) => console.error("[email]", e));
+  after(() =>
+    sendTeamNotification({
+      firstName: data.firstName,
+      email: data.email,
+      phone: data.phone,
+      result: scoring.result,
+      leadTemp: scoring.leadTemp,
+      refCode: data.refCode,
+    }).catch((e) => console.error("[email]", e))
+  );
 
   // GoHighLevel webhook
   if (process.env.GHL_WEBHOOK_URL) {
@@ -253,11 +269,14 @@ export async function POST(request: Request) {
       utmCampaign: data.utmCampaign || "",
       refCode: data.refCode || "",
     });
-    fetch(process.env.GHL_WEBHOOK_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(ghlPayload),
-    }).catch((e) => console.error("[ghl] Quiz webhook error:", e));
+    const ghlWebhookUrl = process.env.GHL_WEBHOOK_URL;
+    after(() =>
+      fetch(ghlWebhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(ghlPayload),
+      }).catch((e) => console.error("[ghl] Quiz webhook error:", e))
+    );
   }
 
   console.log("[quiz/submit] New quiz lead:", {
