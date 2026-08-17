@@ -3,6 +3,8 @@ import { leadFormSchema } from "@/lib/validation";
 import { appendLeadToGoogleSheet } from "@/lib/google-sheets";
 import { sendLeadToAppsScriptSheet } from "@/lib/apps-script-sheets";
 import { getSupabaseServer } from "@/lib/supabase/server";
+import { classifyTimeframeLeadTemperature } from "@/lib/lead-temperature";
+import { buildConsultationGhlPayload } from "@/lib/ghl-webhook";
 
 /**
  * POST /api/leads
@@ -69,6 +71,25 @@ export async function POST(request: Request) {
     },
   });
 
+  // Lead temperature is computed once (via the canonical classifier in
+  // lib/lead-temperature.ts) and reused for both Supabase and the GHL
+  // webhook below, so they can never disagree with each other. Returns
+  // "unknown" — never a silent fallback to "nurture" — for a missing or
+  // unrecognized timeframe value.
+  const leadTemp = classifyTimeframeLeadTemperature(lead.timeframe);
+
+  if (leadTemp === "unknown") {
+    // In practice this shouldn't happen — leadFormSchema's `timeframe`
+    // field is a strict Zod enum of the 4 known dropdown options, so
+    // anything else is already rejected before this point. Logged anyway
+    // as a defensive signal. No PII (name/email/phone) included.
+    console.warn("[leads] Unexpected unknown lead temperature", {
+      route: "/api/leads",
+      invalidTimeframe: lead.timeframe ?? null,
+      reason: "leadTemp resolved to 'unknown' — check classifyTimeframeLeadTemperature for a gap, or whether leadFormSchema's timeframe enum changed without updating lib/lead-temperature.ts.",
+    });
+  }
+
   // Save to Supabase
   const supabase = getSupabaseServer();
   if (supabase) {
@@ -83,7 +104,7 @@ export async function POST(request: Request) {
         utm_medium: lead.utmMedium || null,
         utm_campaign: lead.utmCampaign || null,
         utm_content: lead.utmContent || null,
-        lead_temp: lead.timeframe === "As soon as possible" ? "hot" : lead.timeframe === "Within 2 weeks" || lead.timeframe === "Within 30 days" ? "warm" : "nurture",
+        lead_temp: leadTemp,
         marketing_consent: true,
         status: "new",
         quiz_answers: { _form_submission: true, mainGoal: lead.mainGoal },
@@ -115,24 +136,24 @@ export async function POST(request: Request) {
   // GoHighLevel webhook
   if (process.env.GHL_WEBHOOK_URL) {
     try {
+      const ghlPayload = buildConsultationGhlPayload({
+        firstName: lead.firstName,
+        lastName: lead.lastName,
+        email: lead.email,
+        phone: lead.phone,
+        serviceInterest: lead.serviceInterest || "",
+        timeframe: lead.timeframe,
+        mainGoal: lead.mainGoal || "",
+        source: lead.source || "website",
+        utmSource: lead.utmSource || "",
+        utmMedium: lead.utmMedium || "",
+        utmCampaign: lead.utmCampaign || "",
+        leadTemp,
+      });
       await fetch(process.env.GHL_WEBHOOK_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          first_name: lead.firstName,
-          last_name: lead.lastName,
-          email: lead.email,
-          phone: lead.phone,
-          source_type: "consultation",
-          service_interest: lead.serviceInterest || "",
-          timeframe: lead.timeframe,
-          main_goal: lead.mainGoal || "",
-          source: lead.source || "website",
-          utm_source: lead.utmSource || "",
-          utm_medium: lead.utmMedium || "",
-          utm_campaign: lead.utmCampaign || "",
-          tags: ["consultation-form", "dessi-dollhouse"],
-        }),
+        body: JSON.stringify(ghlPayload),
       });
     } catch (err) {
       console.error("[ghl] Webhook error:", err);

@@ -54,9 +54,39 @@ describe("scoreQuiz — lead temperature", () => {
     expect(output.leadTemp).toBe("education");
   });
 
-  it("defaults to education when q5 is not answered", () => {
+  // Unified lead-temperature logic: missing/malformed Q5 must resolve to
+  // "unknown", never silently default to "education" (or any other
+  // bucket). See lib/lead-temperature.ts / lib/__tests__/lead-temperature.test.ts
+  // for the full classifier test suite — these just confirm scoreQuiz
+  // wires through to it correctly.
+  it("returns unknown when q5 is not answered (never silently 'education')", () => {
     const output = scoreQuiz({ q1: ["q1_a"] });
-    expect(output.leadTemp).toBe("education");
+    expect(output.leadTemp).toBe("unknown");
+  });
+
+  it("returns unknown when q5 is an empty array", () => {
+    const output = scoreQuiz({ q1: ["q1_a"], q5: [] });
+    expect(output.leadTemp).toBe("unknown");
+  });
+
+  it("returns unknown when q5 contains an invalid option id", () => {
+    const output = scoreQuiz({ q1: ["q1_a"], q5: ["q5_z"] });
+    expect(output.leadTemp).toBe("unknown");
+  });
+
+  it("returns unknown when q5 contains more than one answer", () => {
+    const output = scoreQuiz({ q1: ["q1_a"], q5: ["q5_a", "q5_b"] });
+    expect(output.leadTemp).toBe("unknown");
+  });
+
+  it("lead temperature is independent of the Dollhouse result/scores", () => {
+    // Same q5 answer, wildly different result-driving answers — leadTemp
+    // must be identical regardless of what else was answered.
+    const a = scoreQuiz({ q1: ["q1_a"], q2: ["q2_a"], q5: ["q5_a"] });
+    const b = scoreQuiz({ q1: ["q1_f"], q2: ["q2_f"], q5: ["q5_a"] });
+    expect(a.leadTemp).toBe("hot");
+    expect(b.leadTemp).toBe("hot");
+    expect(a.result.key).not.toBe(b.result.key);
   });
 });
 
@@ -147,6 +177,7 @@ describe("leadTempLabel", () => {
     expect(leadTempLabel("warm")).toContain("Warm");
     expect(leadTempLabel("nurture")).toContain("Nurture");
     expect(leadTempLabel("education")).toContain("Education");
+    expect(leadTempLabel("unknown")).toContain("Unknown");
   });
 });
 
@@ -154,6 +185,7 @@ describe("leadTempBadge", () => {
   it("returns short badge labels", () => {
     expect(leadTempBadge("hot")).toBe("Hot");
     expect(leadTempBadge("warm")).toBe("Warm");
+    expect(leadTempBadge("unknown")).toBe("Unknown");
   });
 });
 

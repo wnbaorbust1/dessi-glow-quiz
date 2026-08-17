@@ -1,3 +1,12 @@
+/**
+ * Lead temperature — canonical definition lives in lib/lead-temperature.ts.
+ * Imported (not just re-exported) here so it's usable locally in this file
+ * too, and re-exported so existing `from "@/lib/quiz-types"` imports keep
+ * working without every call site needing to change.
+ */
+import type { LeadTemperature } from "./lead-temperature";
+export type { LeadTemperature };
+
 /** All possible quiz result keys */
 export type ResultKey =
   | "subtle_lip"
@@ -9,9 +18,6 @@ export type ResultKey =
   | "curves"
   | "sparkle"
   | "custom";
-
-/** Lead temperature derived from Q5 */
-export type LeadTemperature = "hot" | "warm" | "nurture" | "education";
 
 /** A single answer option within a question */
 export interface AnswerOption {

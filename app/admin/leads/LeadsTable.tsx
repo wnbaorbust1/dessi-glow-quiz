@@ -20,6 +20,7 @@ const TEMP_COLORS: Record<string, string> = {
   warm: "#f59e0b",
   nurture: "#10b981",
   education: "#6366f1",
+  unknown: "#8a8a8a",
 };
 
 interface Props {
@@ -103,6 +104,7 @@ export default function LeadsTable({
           <option value="warm">Warm</option>
           <option value="nurture">Nurture</option>
           <option value="education">Education</option>
+          <option value="unknown">Unknown</option>
         </select>
         <select
           value={currentStatus}

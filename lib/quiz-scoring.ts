@@ -8,12 +8,16 @@
  */
 
 import { QUIZ_QUESTIONS, QUIZ_RESULTS } from "./quiz-data";
-import type {
-  QuizAnswers,
-  ResultKey,
-  LeadTemperature,
-  ScoringOutput,
-} from "./quiz-types";
+import type { QuizAnswers, ResultKey, ScoringOutput } from "./quiz-types";
+import {
+  classifyQuizLeadTemperature,
+  leadTempBadge as leadTempBadgeCanonical,
+  leadTempLabel as leadTempLabelCanonical,
+  type LeadTemperature,
+} from "./lead-temperature";
+
+/** id of the question flagged as the lead-temperature question (Q5) */
+const LEAD_TEMP_QUESTION_ID = QUIZ_QUESTIONS.find((q) => q.isLeadTempQuestion)?.id;
 
 const ALL_RESULT_KEYS: ResultKey[] = [
   "subtle_lip",
@@ -38,7 +42,6 @@ export function scoreQuiz(answers: QuizAnswers): ScoringOutput {
     ALL_RESULT_KEYS.map((k) => [k, 0])
   ) as Record<ResultKey, number>;
 
-  let leadTemp: LeadTemperature = "education";
   const matchedAnswers: string[] = [];
 
   for (const question of QUIZ_QUESTIONS) {
@@ -49,11 +52,12 @@ export function scoreQuiz(answers: QuizAnswers): ScoringOutput {
       const option = question.options.find((o) => o.id === chosenId);
       if (!option) continue;
 
-      // Capture lead temperature from Q5
-      if (option.leadTemp) {
-        leadTemp = option.leadTemp;
-        continue; // don't add weights for this question
-      }
+      // Q5 (the lead-temperature question) drives lead temperature, not
+      // result scoring — skip it here. Lead temperature is computed
+      // separately below via classifyQuizLeadTemperature(), independently
+      // of the Dollhouse result / service match / scores, so nothing in
+      // this scoring loop can influence it.
+      if (option.leadTemp) continue;
 
       // Add weights to scores
       for (const [key, weight] of Object.entries(option.weights) as [ResultKey, number][]) {
@@ -77,6 +81,16 @@ export function scoreQuiz(answers: QuizAnswers): ScoringOutput {
   }
 
   const winningKey = selectWinner(scores, answers);
+
+  // Lead temperature: derived ONLY from the Q5 answer, via the canonical
+  // classifier in lib/lead-temperature.ts. No default/fallback here — if
+  // Q5 is missing, empty, or invalid, this returns "unknown" rather than
+  // silently becoming "education". (In practice this route's caller,
+  // app/api/quiz/submit/route.ts, rejects malformed Q5 answers before
+  // calling scoreQuiz at all — see validateQuizQ5Answer.)
+  const leadTemp: LeadTemperature = classifyQuizLeadTemperature(
+    LEAD_TEMP_QUESTION_ID ? answers[LEAD_TEMP_QUESTION_ID] : undefined
+  );
 
   return {
     result: QUIZ_RESULTS[winningKey],
@@ -146,26 +160,18 @@ function selectWinner(
 
 /**
  * Map a lead temperature to a human-readable label.
+ * Re-exported from lib/lead-temperature.ts (the canonical source) so
+ * existing `import { leadTempLabel } from "./quiz-scoring"` call sites
+ * keep working unchanged.
  */
 export function leadTempLabel(temp: LeadTemperature): string {
-  const labels: Record<LeadTemperature, string> = {
-    hot: "Hot — Ready Now",
-    warm: "Warm — Within 30 Days",
-    nurture: "Nurture — 1–3 Months",
-    education: "Education — Just Researching",
-  };
-  return labels[temp];
+  return leadTempLabelCanonical(temp);
 }
 
 /**
  * Map a lead temperature to a short badge label (for admin UI).
+ * Re-exported from lib/lead-temperature.ts — see leadTempLabel above.
  */
 export function leadTempBadge(temp: LeadTemperature): string {
-  const badges: Record<LeadTemperature, string> = {
-    hot: "Hot",
-    warm: "Warm",
-    nurture: "Nurture",
-    education: "Education",
-  };
-  return badges[temp];
+  return leadTempBadgeCanonical(temp);
 }

@@ -159,6 +159,7 @@ export async function sendTeamNotification(data: {
     warm: "☀️ Warm — Within 30 days",
     nurture: "🌱 Nurture — 1-3 months",
     education: "📚 Education — Just researching",
+    unknown: "❓ Unknown — needs manual review",
   };
 
   try {

@@ -117,6 +117,7 @@ export default async function AdminDashboard() {
     warm: "#f59e0b",
     nurture: "#10b981",
     education: "#6366f1",
+    unknown: "#8a8a8a",
   };
 
   return (
